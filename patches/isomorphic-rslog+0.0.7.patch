@@ -1,0 +1,14 @@
+diff --git a/node_modules/isomorphic-rslog/dist/browser/index.cjs b/node_modules/isomorphic-rslog/dist/browser/index.cjs
+index 948adab..c2f8136 100644
+--- a/node_modules/isomorphic-rslog/dist/browser/index.cjs
++++ b/node_modules/isomorphic-rslog/dist/browser/index.cjs
+@@ -1,4 +1,9 @@
+ "use strict";
++var console = {
++  log() {},
++  warn() {},
++  error() {},
++};
+ var __defProp = Object.defineProperty;
+ var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+ var __getOwnPropNames = Object.getOwnPropertyNames;
