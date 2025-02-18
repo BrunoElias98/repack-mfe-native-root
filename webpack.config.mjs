@@ -144,6 +144,7 @@ export default (env) => {
       new Repack.plugins.ModuleFederationPluginV2({
         name: 'Root',
         filename: 'Root.container.js.bundle',
+        dts: false,
         remotes: {
           Cart2: `Cart2@http://localhost:9000/${platform}/Cart2.container.js.bundle`,
         },

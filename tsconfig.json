@@ -2,9 +2,11 @@
   "extends": "@react-native/typescript-config/tsconfig.json",
   "compilerOptions": {
     "module": "es2020",
-    "baseUrl": ".", // Adicionar baseUrl
+    "baseUrl": ".",
     "paths": {
-      "Cart2/*": ["../cart2/*"] // Adicionar mapeamento de caminho para Cart2
+      "Cart2/*": [
+        "../cart2/*"
+      ]
     }
   }
 }
