@@ -7,6 +7,15 @@
       "Cart2/*": [
         "../cart2/*"
       ]
-    }
-  }
+    },
+    "typeRoots": [
+      "./types",
+      "./node_modules/@types"
+    ]
+  },
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    "types/**/*.d.ts"
+  ]
 }

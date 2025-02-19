@@ -3,7 +3,6 @@ import {StyleSheet, Text, View, DeviceEventEmitter} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Cart = React.lazy(() => import('Cart2/App'));
-// @ts-ignore
 const AuthProvider = React.lazy(() => import('Cart2/AuthProvider'));
 
 function App(): React.JSX.Element {
@@ -36,6 +35,8 @@ function App(): React.JSX.Element {
       subscription.remove();
     };
   }, []);
+
+  console.log('OLA DEBUG')
 
   return (
     <View style={styles.mainContainer}>
