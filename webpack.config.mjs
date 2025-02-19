@@ -32,13 +32,15 @@ export default (env) => {
     bundleFilename = undefined,
     sourceMapFilename = undefined,
     assetsPath = undefined,
-    devServer = {              // Configurar devServer com valores padrão
+    devServer = {
       port: 8081,
-      hot: false, // Desabilitar HMR
+      hot: false,
     },
     reactNativePath = resolve('react-native'),
   } = env;
+
   console.log('PACKAGES> >>>>>>> ', pkg.dependencies);
+
   if (!platform) {
     throw new Error('Missing platform');
   }
@@ -89,7 +91,7 @@ export default (env) => {
       path: path.join(dirname, 'build/generated', platform),
       filename: 'index.bundle',
       chunkFilename: '[name].chunk.bundle',
-      publicPath: Repack.getPublicPath(), // Mover para aqui
+      publicPath: Repack.getPublicPath(),
     },
     module: {
       /**
@@ -132,12 +134,11 @@ export default (env) => {
         context,
         mode,
         platform,
-        devServer,                // Usar o devServer configurado
+        devServer,
         output: {
           bundleFilename,
           sourceMapFilename,
           assetsPath,
-          // Remover publicPath daqui
         },
       }),
 

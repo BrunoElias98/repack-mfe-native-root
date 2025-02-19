@@ -36,8 +36,6 @@ function App(): React.JSX.Element {
     };
   }, []);
 
-  console.log('OLA DEBUG')
-
   return (
     <View style={styles.mainContainer}>
       <View style={styles.headerContainer}>
