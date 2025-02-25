@@ -1,6 +1,7 @@
 import React, {Suspense, useState, useEffect} from 'react';
 import {Text, View} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useStore} from 'Cart2/store';
 
 import {styles} from './app.styles';
 import {addEventListener} from './eventListeners';
@@ -11,7 +12,8 @@ const AuthProvider = React.lazy(() => import('Cart2/AuthProvider'));
 function App(): React.JSX.Element {
   const [count, setCount] = useState(0);
   const [storageMessage, setStorageMessage] = useState<string>('');
-
+  const {count: Counter} = useStore();
+  console.log(Counter);
   const handleCountChange = (newCount: number) => {
     setCount(newCount);
   };
