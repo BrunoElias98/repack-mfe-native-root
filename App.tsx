@@ -1,6 +1,9 @@
 import React, {Suspense, useState, useEffect} from 'react';
-import {StyleSheet, Text, View, DeviceEventEmitter} from 'react-native';
+import {Text, View} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
+import {styles} from './app.styles';
+import {addEventListener} from './eventListeners';
 
 const Cart = React.lazy(() => import('Cart2/App'));
 const AuthProvider = React.lazy(() => import('Cart2/AuthProvider'));
@@ -17,6 +20,7 @@ function App(): React.JSX.Element {
     try {
       const value = await AsyncStorage.getItem('@shared_storage');
       const storageData = value ? JSON.parse(value) : null;
+
       setStorageMessage(storageData?.message || '');
     } catch (error) {
       setStorageMessage('Erro ao ler storage');
@@ -26,20 +30,19 @@ function App(): React.JSX.Element {
   useEffect(() => {
     updateStorageMessage();
 
-    const subscription = DeviceEventEmitter.addListener(
-      'storage_updated',
-      updateStorageMessage,
-    );
+    const subscribe = addEventListener('storage_updated', updateStorageMessage);
 
     return () => {
-      subscription.remove();
+      subscribe();
     };
   }, []);
 
   return (
     <View style={styles.mainContainer}>
       <View style={styles.headerContainer}>
-        <Text style={styles.textCount}>Contador na Root: {count}</Text>
+        <Text style={styles.textCount}>
+          Contador da parcel na Root: {count}
+        </Text>
         <Text style={styles.textCount}>
           Mensagem do Storage: {storageMessage || 'Nenhuma mensagem'}
         </Text>
@@ -47,7 +50,7 @@ function App(): React.JSX.Element {
 
       <View style={styles.contentContainer}>
         <AuthProvider>
-          {(authData: {isSignout: boolean; isLoading: boolean}) => {
+          {authData => {
             console.log('debug >>> ', authData);
             if (authData.isLoading) {
               return (
@@ -76,25 +79,5 @@ function App(): React.JSX.Element {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  mainContainer: {
-    flex: 1,
-    justifyContent: 'flex-start',
-  },
-  headerContainer: {
-    flex: 0.2,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#f5f5f5',
-  },
-  contentContainer: {
-    flex: 0.8,
-  },
-  textCount: {
-    fontSize: 20,
-    textAlign: 'center',
-  },
-});
 
 export default App;
