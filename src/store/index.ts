@@ -11,3 +11,9 @@ export const incrementCartCount = async () => {
 
   return useStore.getState().count;
 };
+
+export const getCartCount = async () => {
+  const useStore = await getCartStore();
+
+  return useStore.getState().count;
+};

@@ -4,7 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {styles} from './app.styles';
 import {addEventListener} from './src/helpers/listeners';
-import {incrementCartCount} from './src/store';
+import {getCartCount} from './src/store';
 
 const Cart = React.lazy(() => import('Cart2/App'));
 const AuthProvider = React.lazy(() => import('Cart2/AuthProvider'));
@@ -18,8 +18,8 @@ function App(): React.JSX.Element {
     setCount(newCount);
   };
 
-  const handleIncrementCartCount = async () => {
-    setCartCount(await incrementCartCount());
+  const handleGetCartCount = async () => {
+    setCartCount(await getCartCount());
   };
 
   const updateStorageMessage = async () => {
@@ -49,15 +49,12 @@ function App(): React.JSX.Element {
           Contador da parcel na Root via callback: {count}
         </Text>
         <Text style={styles.textCount}>
-          Contador da parcel na Root via store: {cartCount}
+          Valor do contador da parcel na Root via store: {cartCount}
         </Text>
         <Text style={styles.textCount}>
           Mensagem do Storage: {storageMessage || 'Nenhuma mensagem'}
         </Text>
-        <Button
-          title="Incrementar Contador"
-          onPress={handleIncrementCartCount}
-        />
+        <Button title="Pegar valor" onPress={handleGetCartCount} />
       </View>
 
       <View style={styles.contentContainer}>
