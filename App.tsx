@@ -1,10 +1,10 @@
 import React, {Suspense, useState, useEffect} from 'react';
-import {Text, View} from 'react-native';
+import {Text, View, Button} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {useStore} from 'Cart2/store';
 
 import {styles} from './app.styles';
-import {addEventListener} from './eventListeners';
+import {addEventListener} from './src/helpers/listeners';
+import {incrementCartCount} from './src/store';
 
 const Cart = React.lazy(() => import('Cart2/App'));
 const AuthProvider = React.lazy(() => import('Cart2/AuthProvider'));
@@ -12,17 +12,20 @@ const AuthProvider = React.lazy(() => import('Cart2/AuthProvider'));
 function App(): React.JSX.Element {
   const [count, setCount] = useState(0);
   const [storageMessage, setStorageMessage] = useState<string>('');
-  const {count: Counter} = useStore();
-  console.log(Counter);
+  const [cartCount, setCartCount] = useState<number | null>(null);
+
   const handleCountChange = (newCount: number) => {
     setCount(newCount);
+  };
+
+  const handleIncrementCartCount = async () => {
+    setCartCount(await incrementCartCount());
   };
 
   const updateStorageMessage = async () => {
     try {
       const value = await AsyncStorage.getItem('@shared_storage');
       const storageData = value ? JSON.parse(value) : null;
-
       setStorageMessage(storageData?.message || '');
     } catch (error) {
       setStorageMessage('Erro ao ler storage');
@@ -43,17 +46,23 @@ function App(): React.JSX.Element {
     <View style={styles.mainContainer}>
       <View style={styles.headerContainer}>
         <Text style={styles.textCount}>
-          Contador da parcel na Root: {count}
+          Contador da parcel na Root via callback: {count}
+        </Text>
+        <Text style={styles.textCount}>
+          Contador da parcel na Root via store: {cartCount}
         </Text>
         <Text style={styles.textCount}>
           Mensagem do Storage: {storageMessage || 'Nenhuma mensagem'}
         </Text>
+        <Button
+          title="Incrementar Contador"
+          onPress={handleIncrementCartCount}
+        />
       </View>
 
       <View style={styles.contentContainer}>
         <AuthProvider>
           {authData => {
-            console.log('debug >>> ', authData);
             if (authData.isLoading) {
               return (
                 <View>
