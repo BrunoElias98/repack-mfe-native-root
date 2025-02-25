@@ -1,19 +1,15 @@
-export const getCartStore = async () => {
-  const {useStore} = await import('Cart2/store');
-
+const importCartStore = async () => {
+  const { useStore } = await import('Cart2/store');
   return useStore;
 };
 
-export const incrementCartCount = async () => {
-  const useStore = await getCartStore();
-
-  useStore.getState().increment();
-
-  return useStore.getState().count;
+export const getCartStore = async () => {
+  return await importCartStore();
 };
 
 export const getCartCount = async () => {
-  const useStore = await getCartStore();
+  const { getState } = await getCartStore();
+  const { count } = getState();
 
-  return useStore.getState().count;
+  return count;
 };

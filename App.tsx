@@ -1,10 +1,10 @@
-import React, {Suspense, useState, useEffect} from 'react';
-import {Text, View, Button} from 'react-native';
+import React, { Suspense, useState, useEffect } from 'react';
+import { Text, View, Button } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import {styles} from './app.styles';
-import {addEventListener} from './src/helpers/listeners';
-import {getCartCount} from './src/store';
+import { styles } from './app.styles';
+import { addEventListener } from './src/helpers/listeners';
+import { getCartCount } from './src/store';
 
 const Cart = React.lazy(() => import('Cart2/App'));
 const AuthProvider = React.lazy(() => import('Cart2/AuthProvider'));
@@ -59,8 +59,8 @@ function App(): React.JSX.Element {
 
       <View style={styles.contentContainer}>
         <AuthProvider>
-          {authData => {
-            if (authData.isLoading) {
+          {({ isLoading, isSignout }) => {
+            if (isLoading) {
               return (
                 <View>
                   <Text>renderizar a SplashScreen</Text>
@@ -68,7 +68,7 @@ function App(): React.JSX.Element {
               );
             }
 
-            if (authData.isSignout) {
+            if (isSignout) {
               return (
                 <Suspense fallback={<Text>Loading Cart2...</Text>}>
                   <Cart onCountChange={handleCountChange} />
