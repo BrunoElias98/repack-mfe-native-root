@@ -51,10 +51,10 @@ function App(): React.JSX.Element {
         <Text style={styles.textCount}>
           Valor do contador da parcel na Root via store: {cartCount}
         </Text>
+        <Button title="Pegar valor" onPress={handleGetCartCount} />
         <Text style={styles.textCount}>
           Mensagem do Storage: {storageMessage || 'Nenhuma mensagem'}
         </Text>
-        <Button title="Pegar valor" onPress={handleGetCartCount} />
       </View>
 
       <View style={styles.contentContainer}>
