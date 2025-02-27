@@ -45,19 +45,23 @@ function App(): React.JSX.Element {
   return (
     <View style={styles.mainContainer}>
       <View style={styles.headerContainer}>
-        <Text style={styles.textCount}>
+        <Text style={styles.textCount} testID="parcel-root-callback">
           Contador da parcel na Root via callback: {count}
         </Text>
-        <Text style={styles.textCount}>
+        <Text style={styles.textCount} testID="parcel-root-store">
           Valor do contador da parcel na Root via store: {cartCount}
         </Text>
-        <Button title="Pegar valor" onPress={handleGetCartCount} />
-        <Text style={styles.textCount}>
+        <Button
+          title="Pegar valor"
+          testID="get-cart-count"
+          onPress={handleGetCartCount}
+        />
+        <Text style={styles.textCount} testID="storage-message">
           Mensagem do Storage: {storageMessage || 'Nenhuma mensagem'}
         </Text>
       </View>
 
-      <View style={styles.contentContainer}>
+      <View style={styles.contentContainer} testID="cart-app-container">
         <AuthProvider>
           {({ isLoading, isSignout }) => {
             if (isLoading) {
